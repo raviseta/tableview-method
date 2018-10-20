@@ -1,0 +1,70 @@
+extension HomeVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        if collectionView == cvHome{
+            return arrServices.count
+        }else{
+            return arrBottom.count
+        }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if collectionView == cvHome{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCell", for: indexPath) as! HomeCell
+            
+            cell.layer.cornerRadius = 10
+            cell.layer.borderColor = UIColor.black.cgColor
+            cell.layer.borderWidth = 2.00
+            
+            cell.lblTitle.text = arrServices[indexPath.row]["name"] as? String
+            cell.ivImage.image = UIImage(named: "\(arrImageBottom[indexPath.row])")
+            
+            return cell
+        }else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BottomCell", for: indexPath) as! BottomCell
+            
+            cell.lblTitle.text = arrBottom[indexPath.row]
+            cell.ivImage.image = UIImage(named: "\(arrImageBottom[indexPath.row])")
+
+            return cell
+        }
+        
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        
+        if collectionView == cvHome{
+            if indexPath.row == 0{
+                self.performSegue(withIdentifier: "toShipping", sender: self)
+            }else if indexPath.row == 1{
+                self.performSegue(withIdentifier: "toTransportGoods", sender: self)
+            }else if indexPath.row == 2{
+                self.performSegue(withIdentifier: "toConstruction", sender: self)
+            }else if indexPath.row == 3{
+                self.performSegue(withIdentifier: "toRoadAssistance", sender: self)
+            }
+        }else{
+            if indexPath.row == 0{
+               // self.performSegue(withIdentifier: "toShipping", sender: self)
+            }else if indexPath.row == 1{
+                self.performSegue(withIdentifier: "toBooking", sender: self)
+            }
+        }
+        
+       
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if collectionView == cvHome{
+            return CGSize(width: (self.cvHome.frame.width - 100) / 2 , height: 150)
+        }else{
+            return CGSize(width: (self.cvBottom.frame.width - 10) / 4 , height: self.cvBottom.frame.height)
+            }
+        }
+ 
+}
